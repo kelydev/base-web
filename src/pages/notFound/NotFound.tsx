@@ -1,7 +1,7 @@
 import React from "react"
 const NotFound: React.FC = () =>  {
     return <div>
-        Not found like like like like
+        Not found
     </div>
 }
 

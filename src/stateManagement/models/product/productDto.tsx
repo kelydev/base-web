@@ -1,7 +1,12 @@
 export interface productDto {
+    id:number,
     title: string;
-    price: string;
-    category: string;
+    price: number;
     description: string;
     image: string;
+    category: string;
+    rating: {
+        rate: Float64Array;
+        count: number;
+    }
 }

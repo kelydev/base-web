@@ -1,17 +1,31 @@
 import apiSlice from './apiSlice'
 import { 
-  getAllProductQuery,
+  getAllCategoryQuery,
+  getProductCategoryQuery,
+  createProductQuery,
+  getProductQuery,
+  deleteProductQuery,
+  updateProductMutation,
 } from '../../stateManagement/queries';
 
 export const productApi = apiSlice.injectEndpoints({
   endpoints: build => ({
-    getAllProduct: build.query(getAllProductQuery),
+    getAllCategory: build.query(getAllCategoryQuery),
+    getProductCategory: build.query(getProductCategoryQuery),
+    createProduct: build.mutation(createProductQuery),
+    getProduct: build.query(getProductQuery),
+    deleteProduct: build.query(deleteProductQuery),
+    updateProduct: build.mutation(updateProductMutation)
   }),
 });
 
 export const {
-  useGetAllProductQuery
-} = productApi;
-//States
+  useGetAllCategoryQuery,
+  useGetProductCategoryQuery,
+  useCreateProductMutation,
+  useGetProductQuery,
+  useDeleteProductQuery,
+  useUpdateProductMutation,
+  } = productApi
 
 export default productApi;

@@ -1,8 +1,19 @@
-
 import { loginMutation } from './userQueries'
-import { getAllProductQuery } from './productQueries'
+import {
+    getProductCategoryQuery, 
+    getProductQuery, 
+    createProductQuery, 
+    deleteProductQuery, 
+    updateProductMutation
+} from './productQueries'
+import { getAllCategoryQuery } from './categoryQueries'
 
 export {
     loginMutation,
-    getAllProductQuery
+    getAllCategoryQuery,
+    getProductCategoryQuery,
+    createProductQuery,
+    getProductQuery,
+    deleteProductQuery,
+    updateProductMutation,
 }

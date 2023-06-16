@@ -1,8 +1,17 @@
 export const endpoints = {
   user: {
-    login: '/auth/login',
+    login: 'auth/login',
   },
+
   product: {
-    getAllProduct: '/products',
+    getProductCategory: '/products/category/',
+    createProduct: '/products',
+    getProduct:'/products/',
+    deleteProduct:'/products/',
+    updateProduct:'/products/',
   },
+
+  category: {
+    getAllCategory:'/products/categories',
+  }
 }

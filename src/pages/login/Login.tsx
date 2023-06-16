@@ -3,38 +3,38 @@ import { Button, Grid, Paper, Box, TextField, Typography, InputAdornment, IconBu
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useForm } from 'react-hook-form';
 import { useLoginMutation } from "../../stateManagement/apiSlices/userApi";
 import { useNavigate } from "react-router-dom";
-import useTheme from '@mui/material/styles/useTheme';
+import { useTheme } from '@mui/material/styles';
 
 const Login: React.FC = () => {
-
   const navigate = useNavigate();
   const defaultTheme = createTheme();
   const theme = useTheme();
 
+  const { handleSubmit, register, formState: { errors } } = useForm();
   const [login, { isLoading }] = useLoginMutation();
-  const [token, setToken]= useState('')
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [token, setToken]= useState('');
   const [showPassword, setShowPassword] = useState(false);
   
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmitForm = () => {
+  const onSubmit = (data: any) => {
     login({
-      username: username,
-      password: password,
+      username: data.username,
+      password: data.password,
     })
       .unwrap()
       .then((res: any) => { 
-        setToken ( JSON.stringify(res));
+        const token = JSON.stringify(res);
+        setToken(token);
         navigate("/product");
       })
       .catch((err: any) => { 
-        setToken (JSON.stringify(err.data));
+        setToken(JSON.stringify(err.data));
       });
   };
 
@@ -57,50 +57,48 @@ const Login: React.FC = () => {
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box sx={{ my: 8, mx: 9, display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
+          <Box sx={{ my: 8, mx: 9, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Box 
               component="img"
-              sx={{ height: 43, width: 200,}}
+              sx={{ height: 43, width: 200 }}
               alt="ruway"
               src="https://ruway.tech/static/media/logo.0daae2dc.png"
             />
-              <Typography 
-                component="h2" 
-                variant="h5" 
-                fontWeight="bold" 
-                fontSize={24}
-                sx={{
-                  marginTop: '10px',
-                  marginBottom: '20px',
-                  marginRight: '0px',
-                  marginLeft: '0px',
-                  paddingTop: '16px',
-                  paddingBottom: '16px',
-                }}
-              >
-                Iniciar Sesion
-              </Typography>
+            <Typography 
+              component="h2" 
+              variant="h5" 
+              fontWeight="bold" 
+              fontSize={24}
+              sx={{
+                marginTop: '10px',
+                marginBottom: '20px',
+                marginRight: '0px',
+                marginLeft: '0px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+              }}
+            >
+              Iniciar Sesión
+            </Typography>
 
-            <Box component="form" noValidate onSubmit={handleSubmitForm} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 fullWidth
-                id="email"
                 label="Usuario"
-                name="email"
-                variant="outlined" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)}
+                variant="outlined"
+                {...register('username', { required: true })}
+                error={!!errors.username}
+                helperText={errors.username && 'Este campo es requerido'}
               />
               <TextField
                 margin="normal"
                 fullWidth
                 label="Contraseña"
-                name="password"
-                id="password"
                 variant="outlined"
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)}
+                {...register('password', { required: true })}
+                error={!!errors.password}
+                helperText={errors.password && 'Este campo es requerido'}
                 type={showPassword ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
@@ -122,8 +120,7 @@ const Login: React.FC = () => {
                   pt: '10px',
                   pb: '10px',
                 }}
-                disabled={isLoading} 
-                onClick ={handleSubmitForm}
+                disabled={isLoading}
               >
                 Inicia sesión
               </Button>

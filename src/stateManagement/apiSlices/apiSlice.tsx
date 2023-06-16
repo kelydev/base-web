@@ -9,7 +9,6 @@ const apiSlice = createApi({
     'Products'
   ],
   endpoints: builder => ({
-   
   }),
 })
 
